@@ -35,12 +35,16 @@ namespace Zadatak_1
         {
             CurrentUserPatient = null;
 
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(txtPassword.Password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+
             SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString());
             //User is extracted from the database matching inserted paramaters Username and Password.
             SqlCommand query = new SqlCommand("SELECT * FROM tblPatient WHERE Username=@Username AND Password=@Password", sqlCon);
             query.CommandType = CommandType.Text;
             query.Parameters.AddWithValue("@Username", txtUsername.Text);
-            query.Parameters.AddWithValue("@Password", txtPassword.Password);
+            query.Parameters.AddWithValue("@Password", hash);
             sqlCon.Open();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query);
             DataTable dataTable = new DataTable();
@@ -66,12 +70,16 @@ namespace Zadatak_1
             {
                 CurrentUserDoctor = null;
 
+                data = System.Text.Encoding.ASCII.GetBytes(txtPassword.Password);
+                data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+                hash = System.Text.Encoding.ASCII.GetString(data);
+
                 sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString());
                 //User is extracted from the database matching inserted paramaters Username and Password.
                 query = new SqlCommand("SELECT * FROM tblDoctor WHERE Username=@Username AND Password=@Password", sqlCon);
                 query.CommandType = CommandType.Text;
                 query.Parameters.AddWithValue("@Username", txtUsername.Text);
-                query.Parameters.AddWithValue("@Password", txtPassword.Password);
+                query.Parameters.AddWithValue("@Password", hash);
                 sqlCon.Open();
                 sqlDataAdapter = new SqlDataAdapter(query);
                 dataTable = new DataTable();

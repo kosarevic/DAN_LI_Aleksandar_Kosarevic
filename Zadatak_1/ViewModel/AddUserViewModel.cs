@@ -53,6 +53,10 @@ namespace Zadatak_1.ViewModel
 
         public void AddPatient()
         {
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(patient.Password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
             {
                 var cmd = new SqlCommand(@"insert into tblPatient values (@FirstName, @LastName, @JMBG, @Username, @Password, @CardNumber);", conn);
@@ -60,7 +64,7 @@ namespace Zadatak_1.ViewModel
                 cmd.Parameters.AddWithValue("@LastName", patient.LastName);
                 cmd.Parameters.AddWithValue("@JMBG", patient.JMBG);
                 cmd.Parameters.AddWithValue("@Username", patient.Username);
-                cmd.Parameters.AddWithValue("@Password", patient.Password);
+                cmd.Parameters.AddWithValue("@Password", hash);
                 cmd.Parameters.AddWithValue("@CardNumber", patient.CardNumber);
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -71,6 +75,10 @@ namespace Zadatak_1.ViewModel
 
         public void AddDoctor()
         {
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(doctor.Password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
             {
                 var cmd = new SqlCommand(@"insert into tblDoctor values (@FirstName, @LastName, @JMBG, @Username, @Password, @Account);", conn);
@@ -78,7 +86,7 @@ namespace Zadatak_1.ViewModel
                 cmd.Parameters.AddWithValue("@LastName", doctor.LastName);
                 cmd.Parameters.AddWithValue("@JMBG", doctor.JMBG);
                 cmd.Parameters.AddWithValue("@Username", doctor.Username);
-                cmd.Parameters.AddWithValue("@Password", doctor.Password);
+                cmd.Parameters.AddWithValue("@Password", hash);
                 cmd.Parameters.AddWithValue("@Account", doctor.Account);
                 conn.Open();
                 cmd.ExecuteNonQuery();

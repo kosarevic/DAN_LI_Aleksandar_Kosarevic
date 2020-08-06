@@ -78,6 +78,7 @@
     <Compile Include="Validation\AddDoctorValidation.cs" />
     <Compile Include="Validation\AddPatientValidation.cs" />
     <Compile Include="ViewModel\AddUserViewModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoginScreen.xaml.cs">
