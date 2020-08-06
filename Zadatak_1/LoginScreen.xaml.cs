@@ -28,8 +28,8 @@ namespace Zadatak_1
             InitializeComponent();
         }
 
-        public static User CurrentUserPatient = new Patient();
-        public static User CurrentUserDoctor = new Doctor();
+        public static Patient CurrentUserPatient = new Patient();
+        public static Doctor CurrentUserDoctor = new Doctor();
 
         private void BtnLogin(object sender, RoutedEventArgs e)
         {
@@ -62,6 +62,8 @@ namespace Zadatak_1
                     Password = row[5].ToString(),
                     CardNumber = row[6].ToString()
                 };
+                if (row[7] != null)
+                    CurrentUserPatient.DoctorId = int.Parse(row[7].ToString());
             }
 
             sqlCon.Close();
@@ -102,10 +104,20 @@ namespace Zadatak_1
 
             if (CurrentUserPatient != null)
             {
-                PatientWindow window = new PatientWindow();
-                window.Show();
-                Close();
-                return;
+                if (CurrentUserPatient.DoctorId != 0)
+                {
+                    PatientWindow window = new PatientWindow();
+                    window.Show();
+                    Close();
+                    return;
+                }
+                else
+                {
+                    ChoseDoctorWindow window = new ChoseDoctorWindow();
+                    window.Show();
+                    Close();
+                    return;
+                }
             }
             else if (CurrentUserDoctor != null)
             {

@@ -59,13 +59,14 @@ namespace Zadatak_1.ViewModel
 
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
             {
-                var cmd = new SqlCommand(@"insert into tblPatient values (@FirstName, @LastName, @JMBG, @Username, @Password, @CardNumber);", conn);
+                var cmd = new SqlCommand(@"insert into tblPatient values (@FirstName, @LastName, @JMBG, @Username, @Password, @CardNumber, @DoctorID);", conn);
                 cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", patient.LastName);
                 cmd.Parameters.AddWithValue("@JMBG", patient.JMBG);
                 cmd.Parameters.AddWithValue("@Username", patient.Username);
                 cmd.Parameters.AddWithValue("@Password", hash);
                 cmd.Parameters.AddWithValue("@CardNumber", patient.CardNumber);
+                cmd.Parameters.AddWithValue("@DoctorID", patient.DoctorId);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();

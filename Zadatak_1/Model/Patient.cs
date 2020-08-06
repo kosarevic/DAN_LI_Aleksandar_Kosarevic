@@ -10,6 +10,7 @@ namespace Zadatak_1.Model
     {
 
         public string CardNumber { get; set; }
+        public int DoctorId { get; set; }
 
         public Patient() : base()
         {

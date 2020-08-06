@@ -7,8 +7,19 @@ USE Zadatak_1
 --All tables are reseted clean.
 if exists (SELECT name FROM sys.sysobjects WHERE name = 'tblPatient')
 drop table tblPatient
-if exists (SELECT name FROM sys.sysobjects WHERE name = 'TblDoctor')
-drop table TblDoctor
+if exists (SELECT name FROM sys.sysobjects WHERE name = 'tblDoctor')
+drop table tblDoctor
+
+create table tblDoctor
+(
+DoctorID int primary key IDENTITY(1,1),
+FirstName varchar(50),
+LastName varchar(50),
+JMBG varchar(13),
+Username varchar(50),
+Password varchar(50),
+Account varchar(50)
+)
 
 create table tblPatient
 (
@@ -18,16 +29,6 @@ LastName varchar(50),
 JMBG varchar(13),
 Username varchar(50),
 Password varchar(50),
-CardNumber varchar(50)
-)
-
-create table TblDoctor
-(
-DoctorID int primary key IDENTITY(1,1),
-FirstName varchar(50),
-LastName varchar(50),
-JMBG varchar(13),
-Username varchar(50),
-Password varchar(50),
-Account varchar(50)
+CardNumber varchar(50),
+DoctorID int
 )
