@@ -28,52 +28,95 @@ namespace Zadatak_1
             InitializeComponent();
         }
 
-        public static User CurrentUser = new User();
+        public static User CurrentUserPatient = new Patient();
+        public static User CurrentUserDoctor = new Doctor();
 
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin(object sender, RoutedEventArgs e)
         {
-            CurrentUser = new User();
+            CurrentUserPatient = null;
+
             SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString());
-            try
+            //User is extracted from the database matching inserted paramaters Username and Password.
+            SqlCommand query = new SqlCommand("SELECT * FROM tblPatient WHERE Username=@Username AND Password=@Password", sqlCon);
+            query.CommandType = CommandType.Text;
+            query.Parameters.AddWithValue("@Username", txtUsername.Text);
+            query.Parameters.AddWithValue("@Password", txtPassword.Password);
+            sqlCon.Open();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query);
+            DataTable dataTable = new DataTable();
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow row in dataTable.Rows)
             {
+                CurrentUserPatient = new Patient
+                {
+                    Id = int.Parse(row[0].ToString()),
+                    FirstName = row[1].ToString(),
+                    LastName = row[2].ToString(),
+                    JMBG = row[3].ToString(),
+                    Username = row[4].ToString(),
+                    Password = row[5].ToString(),
+                    CardNumber = row[6].ToString()
+                };
+            }
+
+            sqlCon.Close();
+
+            if (CurrentUserPatient == null)
+            {
+                CurrentUserDoctor = null;
+
+                sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString());
                 //User is extracted from the database matching inserted paramaters Username and Password.
-                SqlCommand query = new SqlCommand("SELECT * FROM tblUser WHERE Username=@Username AND Password=@Password", sqlCon);
+                query = new SqlCommand("SELECT * FROM tblDoctor WHERE Username=@Username AND Password=@Password", sqlCon);
                 query.CommandType = CommandType.Text;
                 query.Parameters.AddWithValue("@Username", txtUsername.Text);
                 query.Parameters.AddWithValue("@Password", txtPassword.Password);
                 sqlCon.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query);
-                DataTable dataTable = new DataTable();
+                sqlDataAdapter = new SqlDataAdapter(query);
+                dataTable = new DataTable();
                 sqlDataAdapter.Fill(dataTable);
-
-                CurrentUser = new User();
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    CurrentUser = new User
+                    CurrentUserDoctor = new Doctor
                     {
                         Id = int.Parse(row[0].ToString()),
-                        Username = row[1].ToString(),
-                        Password = row[2].ToString()
+                        FirstName = row[1].ToString(),
+                        LastName = row[2].ToString(),
+                        JMBG = row[3].ToString(),
+                        Username = row[4].ToString(),
+                        Password = row[5].ToString(),
+                        Account = row[6].ToString()
                     };
                 }
+            }
 
-                if (CurrentUser != null)
-                {
-                    UserWindow window = new UserWindow(CurrentUser);
-                    window.Show();
-                    Close();
-                    return;
-                }
-            }
-            catch (Exception ex)
+            if (CurrentUserPatient != null)
             {
-                MessageBox.Show(ex.Message);
+                PatientWindow window = new PatientWindow();
+                window.Show();
+                Close();
+                return;
             }
-            finally
+            else if (CurrentUserDoctor != null)
             {
-                sqlCon.Close();
+                DoctorWindow window = new DoctorWindow();
+                window.Show();
+                Close();
+                return;
             }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Incorrect login credentials, please try again.", "Notification");
+            }
+        }
+
+        private void BtnRegister(object sender, RoutedEventArgs e)
+        {
+            RegistrationOption window = new RegistrationOption();
+            window.Show();
+            Close();
         }
     }
 }

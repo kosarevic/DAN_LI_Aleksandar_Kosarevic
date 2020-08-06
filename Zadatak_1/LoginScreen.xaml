@@ -11,7 +11,10 @@
             <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18"/>
             <Label Content="Password" Foreground="White"/>
             <PasswordBox Name="txtPassword" Background="#545d6a" Foreground="White" FontSize="18"/>
-            <Button Name="btnSubmit" Click="btnSubmit_Click" Content="Submit" Margin="60 10" Background="#545d6a" Foreground="White" FontSize="18"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Click="BtnLogin" Content="Login" Margin="10 15" Background="#545d6a" Foreground="White" FontSize="18" Width="75"/>
+                <Button Click="BtnRegister" Content="Register" Margin="30 15" Background="#545d6a" Foreground="White" FontSize="18" Width="75"/>
+            </StackPanel>
         </StackPanel>
     </Border>
 </Window>
