@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Zadatak_1.Model;
+using Zadatak_1.Validation;
 
 namespace Zadatak_1.ViewModel
 {

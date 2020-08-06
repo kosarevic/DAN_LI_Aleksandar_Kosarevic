@@ -67,7 +67,7 @@ namespace Zadatak_1.Validation
                         //Validation for checking duplicate JMBG in database.
                         using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
                         {
-                            var cmd = new SqlCommand(@"select JMBG from tblEmploye where JMBG = @JMBG", conn);
+                            var cmd = new SqlCommand(@"select JMBG from tblPatient where JMBG = @JMBG", conn);
                             cmd.Parameters.AddWithValue("@JMBG", e.JMBG);
                             conn.Open();
                             SqlDataReader reader1 = cmd.ExecuteReader();
@@ -85,7 +85,7 @@ namespace Zadatak_1.Validation
                         }
                         using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
                         {
-                            var cmd = new SqlCommand(@"select JMBG from tblManager where JMBG = @JMBG", conn);
+                            var cmd = new SqlCommand(@"select JMBG from tblDoctor where JMBG = @JMBG", conn);
                             cmd.Parameters.AddWithValue("@JMBG", e.JMBG);
                             conn.Open();
                             SqlDataReader reader1 = cmd.ExecuteReader();
@@ -162,11 +162,56 @@ namespace Zadatak_1.Validation
                 }
                 if (cancel) { break; }
 
-                if (e.Username == null || e.Username == "")
+                if (e.CardNumber == null || e.CardNumber == "" || !e.CardNumber.All(Char.IsDigit))
+                {
+                    MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Card number is incorrect, please try again.", "Notification");
+                    cancel = true;
+                    break;
+                }
+                else if (e.Username == null || e.Username == "")
                 {
                     MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Username is incorrect, please try again.", "Notification");
                     cancel = true;
                     break;
+                }
+                else if(e.Username!=null || e.Username != "")
+                {
+                    using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
+                    {
+                        var cmd = new SqlCommand(@"select Username from tblPatient where Username = @Username", conn);
+                        cmd.Parameters.AddWithValue("@Username", e.Username);
+                        conn.Open();
+                        SqlDataReader reader1 = cmd.ExecuteReader();
+                        while (reader1.Read())
+                        {
+                            if (reader1[0].ToString() == e.Username)
+                            {
+                                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Username already exists in database, try again.", "Notification");
+                                cancel = true;
+                                break;
+                            }
+                        }
+                        reader1.Close();
+                        conn.Close();
+                    }
+                    using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
+                    {
+                        var cmd = new SqlCommand(@"select Username from tblDoctor where Username = @Username", conn);
+                        cmd.Parameters.AddWithValue("@Username", e.Username);
+                        conn.Open();
+                        SqlDataReader reader1 = cmd.ExecuteReader();
+                        while (reader1.Read())
+                        {
+                            if (reader1[0].ToString() == e.Username)
+                            {
+                                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Username already exists in database, try again.", "Notification");
+                                cancel = true;
+                                break;
+                            }
+                        }
+                        reader1.Close();
+                        conn.Close();
+                    }
                 }
                 else if (e.Password == null || e.Password == "")
                 {
@@ -185,6 +230,5 @@ namespace Zadatak_1.Validation
                 return false;
             }
         }
-
     }
 }

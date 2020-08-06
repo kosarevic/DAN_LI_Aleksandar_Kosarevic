@@ -20,7 +20,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="602,57,0,0" TextWrapping="Wrap" Text="{Binding Patient.Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="544,109,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="602,106,0,0" TextWrapping="Wrap" Text="{Binding Patient.Password, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="Confirm" Click="Btn_Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="291,323,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Click="Btn_Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="291,323,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Click="Btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="433,323,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>

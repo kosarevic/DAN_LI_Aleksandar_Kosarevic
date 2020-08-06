@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Zadatak_1.Validation;
 using Zadatak_1.ViewModel;
 
 namespace Zadatak_1
@@ -26,14 +27,23 @@ namespace Zadatak_1
         {
             InitializeComponent();
             DataContext = auvm;
+            auvm.Patient.FirstName = "";
+            auvm.Patient.LastName = "";
+            auvm.Patient.JMBG = "";
+            auvm.Patient.Username = "";
+            auvm.Patient.Password = "";
+            auvm.Patient.CardNumber = "";
         }
 
         private void Btn_Confirm(object sender, RoutedEventArgs e)
         {
-            auvm.AddPatient();
-            LoginScreen window = new LoginScreen();
-            window.Show();
-            Close();
+            if (AddPatientValidation.Validate(auvm.Patient))
+            {
+                auvm.AddPatient();
+                LoginScreen window = new LoginScreen();
+                window.Show();
+                Close(); 
+            }
         }
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
