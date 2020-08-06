@@ -13,6 +13,9 @@ using Zadatak_1.Model;
 
 namespace Zadatak_1.ViewModel
 {
+    /// <summary>
+    /// Class responsible for managing data for patient side of application.
+    /// </summary>
     class PatientViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Doctor> Doctors { get; set; }
@@ -37,6 +40,9 @@ namespace Zadatak_1.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method fills the list dedicated to the coresponding window.
+        /// </summary>
         public void FillList()
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))
@@ -67,6 +73,9 @@ namespace Zadatak_1.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method responsible for assigning dedicated doctor to the patient.
+        /// </summary>
         public void UpdatePatientDoctor()
         {
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ToString()))

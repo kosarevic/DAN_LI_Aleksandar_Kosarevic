@@ -34,7 +34,7 @@ namespace Zadatak_1
         private void BtnLogin(object sender, RoutedEventArgs e)
         {
             CurrentUserPatient = null;
-
+            //Inserted value in password field is being converted into enrypted verson for latter matching with database version.
             byte[] data = System.Text.Encoding.ASCII.GetBytes(txtPassword.Password);
             data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
             String hash = System.Text.Encoding.ASCII.GetString(data);
@@ -67,7 +67,7 @@ namespace Zadatak_1
             }
 
             sqlCon.Close();
-
+            //If inserted values dont mach with any in database, login process looks for doctor login credentials.
             if (CurrentUserPatient == null)
             {
                 CurrentUserDoctor = null;
@@ -101,9 +101,10 @@ namespace Zadatak_1
                     };
                 }
             }
-
+            
             if (CurrentUserPatient != null)
             {
+                //If logged in patient has doctor assinged application routes to PatientWindow.
                 if (CurrentUserPatient.DoctorId != 0)
                 {
                     PatientWindow window = new PatientWindow();
@@ -113,6 +114,7 @@ namespace Zadatak_1
                 }
                 else
                 {
+                    //If patient doesnt have doctor assigned, he is forced to chose first before proceding.
                     ChoseDoctorWindow window = new ChoseDoctorWindow();
                     window.Show();
                     Close();

@@ -10,6 +10,9 @@ using Zadatak_1.Model;
 
 namespace Zadatak_1.Validation
 {
+    /// <summary>
+    /// Class with sole purpose of validating inserted data, when patient registration process is engaged.
+    /// </summary>
     static class AddPatientValidation
     {
         //Static variables made to store usefull data after validation.

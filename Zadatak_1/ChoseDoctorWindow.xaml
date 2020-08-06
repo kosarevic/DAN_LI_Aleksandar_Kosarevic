@@ -8,7 +8,20 @@
         mc:Ignorable="d"
         Title="ChoseDoctorWindow" Height="450" Width="400">
     <Grid>
-        <ComboBox x:Name="Doctor" HorizontalAlignment="Left" Margin="73,128,0,0" VerticalAlignment="Top" Width="253" ItemsSource="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FirstName" SelectedValue="{Binding Doctor, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox Name="Doctor" Width="253" VerticalAlignment="Top" HorizontalAlignment="Left"  ItemsSource="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Doctor, UpdateSourceTrigger=PropertyChanged}" Margin="73,109,0,0">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="FirstName"/>
+                                <Binding Path="LastName"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <Label Content="Chose your doctor" FontSize="30" HorizontalAlignment="Left" Margin="73,29,0,0" VerticalAlignment="Top"/>
         <Button Content="Confirm" HorizontalAlignment="Left" Margin="73,335,0,0" VerticalAlignment="Top" Width="75" Click="AssignDoctor"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="251,335,0,0" VerticalAlignment="Top" Width="75" Click="Cancel"/>

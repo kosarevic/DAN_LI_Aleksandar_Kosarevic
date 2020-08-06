@@ -51,8 +51,12 @@ namespace Zadatak_1.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method responsible for adding patient to the database.
+        /// </summary>
         public void AddPatient()
         {
+            //User password is encrypted before being deposited in database.
             byte[] data = System.Text.Encoding.ASCII.GetBytes(patient.Password);
             data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
             String hash = System.Text.Encoding.ASCII.GetString(data);
@@ -74,8 +78,12 @@ namespace Zadatak_1.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method responsible for adding doctor to the database.
+        /// </summary>
         public void AddDoctor()
         {
+            //User password is encrypted before being deposited in database.
             byte[] data = System.Text.Encoding.ASCII.GetBytes(doctor.Password);
             data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
             String hash = System.Text.Encoding.ASCII.GetString(data);
